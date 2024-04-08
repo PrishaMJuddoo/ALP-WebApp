@@ -1,126 +1,107 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import Nav from "../components/NavBar";
 import Header from "../components/Header";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginMessage, setLoginMessage] = useState("");
+  const BASE_URL = "http://healthworker.amritacreate.org/LeveledBooks/api/";
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const handleChangeUsername = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handleChangePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(`${BASE_URL}/login/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      console.log("Response status:", response.status); // Log the status code
+
+      if (response.status == 200) {
+        const data = await response.json();
+        console.log("Response status:", data.message);
+        if (data.success == 1) {
+          setLoginMessage("Login Successful");
+          navigate("/"); // Navigate to landing page (dashboard) on successful login
+        } else {
+          setLoginMessage("Login Failed: Invalid credentials");
+        }
+      } else {
+        const errorMessage = await response.text();
+        setLoginMessage(`Login Failed: ${errorMessage}`);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setLoginMessage("Login Failed: An error occurred");
+    }
+  };
+
   return (
     <Fragment>
-      <>
-        <meta charSet="utf-8" />
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>SB Admin 2 - Login</title>
-        {/* Custom fonts for this template*/}
-        <link
-          href="vendor/fontawesome-free/css/all.min.css"
-          rel="stylesheet"
-          type="text/css"
-        />
-        <link
-          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-          rel="stylesheet"
-        />
-        {/* Custom styles for this template*/}
-        <link href="css/sb-admin-2.min.css" rel="stylesheet" />
-        <div className="container">
-          {/* Outer Row */}
-          <div className="row justify-content-center">
-            <div className="col-xl-10 col-lg-12 col-md-9">
-              <div className="card o-hidden border-0 shadow-lg my-5">
-                <div className="card-body p-0">
-                  {/* Nested Row within Card Body */}
-                  <div className="row">
-                    <div className="col-lg-6 d-none d-lg-block bg-login-image" />
-                    <div className="col-lg-6">
-                      <div className="p-5">
-                        <div className="text-center">
-                          <h1 className="h4 text-gray-900 mb-4">
-                            Welcome Back!
-                          </h1>
-                        </div>
-                        <form className="user">
-                          <div className="form-group">
-                            <input
-                              type="email"
-                              className="form-control form-control-user"
-                              id="exampleInputEmail"
-                              aria-describedby="emailHelp"
-                              placeholder="Enter Email Address..."
-                            />
-                          </div>
-                          <div className="form-group">
-                            <input
-                              type="password"
-                              className="form-control form-control-user"
-                              id="exampleInputPassword"
-                              placeholder="Password"
-                            />
-                          </div>
-                          <div className="form-group">
-                            <div className="custom-control custom-checkbox small">
-                              <input
-                                type="checkbox"
-                                className="custom-control-input"
-                                id="customCheck"
-                              />
-                              <label
-                                className="custom-control-label"
-                                htmlFor="customCheck"
-                              >
-                                Remember Me
-                              </label>
-                            </div>
-                          </div>
-                          <a
-                            href="index.html"
-                            className="btn btn-primary btn-user btn-block"
-                          >
-                            Login
-                          </a>
-                          <hr />
-                          <a
-                            href="index.html"
-                            className="btn btn-google btn-user btn-block"
-                          >
-                            <i className="fab fa-google fa-fw" /> Login with
-                            Google
-                          </a>
-                          <a
-                            href="index.html"
-                            className="btn btn-facebook btn-user btn-block"
-                          >
-                            <i className="fab fa-facebook-f fa-fw" /> Login with
-                            Facebook
-                          </a>
-                        </form>
-                        <hr />
-                        <div className="text-center">
-                          <a className="small" href="forgot-password.html">
-                            Forgot Password?
-                          </a>
-                        </div>
-                        <div className="text-center">
-                          <a className="small" href="register.html">
-                            Create an Account!
-                          </a>
-                        </div>
-                      </div>
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-lg-6">
+            <div className="card o-hidden border-0 shadow-lg my-5">
+              <div className="card-body p-0">
+                <div className="p-5">
+                  <div className="text-center">
+                    <h1 className="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                  </div>
+                  <form className="user" onSubmit={handleSubmit}>
+                    {/* Username input */}
+                    <div className="form-group">
+                      <input
+                        type="text"
+                        className="form-control form-control-user"
+                        value={username}
+                        onChange={handleChangeUsername}
+                        placeholder="Enter Username"
+                      />
                     </div>
+                    {/* Password input */}
+                    <div className="form-group">
+                      <input
+                        type="password"
+                        className="form-control form-control-user"
+                        value={password}
+                        onChange={handleChangePassword}
+                        placeholder="Enter Password"
+                      />
+                    </div>
+                    {/* Submit button */}
+                    <button type="submit" className="btn btn-primary btn-user btn-block">
+                      Login
+                    </button>
+                  </form>
+                  {/* Display login message */}
+                  <p>{loginMessage}</p>
+                  <hr />
+                  <div className="text-center">
+                    <a className="small" href="forgot-password.html">
+                      Forgot Password?
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {/* Bootstrap core JavaScript*/}
-        {/* Core plugin JavaScript*/}
-        {/* Custom scripts for all pages*/}
-      </>
+      </div>
     </Fragment>
   );
 }
