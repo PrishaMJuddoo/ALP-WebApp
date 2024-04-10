@@ -2,8 +2,9 @@ import React, { Fragment, useState } from "react";
 import Nav from "../components/NavBar";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+import axios from "axios";
 
-function Login() {
+const Login = ({ setToken }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginMessage, setLoginMessage] = useState("");
@@ -22,27 +23,33 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${BASE_URL}/login/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await axios.post(
+        `${BASE_URL}/login/`,
+        {
+          username,
+          password,
         },
-        body: JSON.stringify({ username, password }),
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       console.log("Response status:", response.status); // Log the status code
 
-      if (response.status == 200) {
-        const data = await response.json();
+      if (response.status === 200) {
+        const data = response.data;
         console.log("Response status:", data.message);
-        if (data.success == 1) {
+        if (data.success === 1) {
           setLoginMessage("Login Successful");
+          setToken(true);
           navigate("/"); // Navigate to landing page (dashboard) on successful login
         } else {
           setLoginMessage("Login Failed: Invalid credentials");
         }
       } else {
-        const errorMessage = await response.text();
+        const errorMessage = response.data;
         setLoginMessage(`Login Failed: ${errorMessage}`);
       }
     } catch (error) {
@@ -107,6 +114,6 @@ function Login() {
       </div>
     </Fragment>
   );
-}
+};
 
 export default Login;

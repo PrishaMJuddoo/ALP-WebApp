@@ -1,6 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Logout() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    // Perform sign-out logic here, e.g., clear authentication token from local storage
+    console.log("Signing out...");
+    window.localStorage.removeItem("isLoggedIn");
+    navigate("/login");
+  };
   return (
     <div
       className="modal fade"
@@ -36,9 +45,10 @@ function Logout() {
             >
               Cancel
             </button>
-            <Link to="/Login" className="btn btn-primary">
-              Logout
-            </Link>
+            <button className="btn btn-primary" onClick={handleSignOut}>
+              Sign Out
+            </button>
+            {window.localStorage.setItem("redirectPath", location.pathname)}
           </div>
         </div>
       </div>
