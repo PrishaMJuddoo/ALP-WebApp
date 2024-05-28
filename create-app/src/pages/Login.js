@@ -1,14 +1,23 @@
+<<<<<<< Updated upstream
 import React, { Fragment, useState } from "react";
 import Nav from "../components/NavBar";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 function Login() {
+=======
+import React, { Fragment, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import logo from "../assets/ALPLogo.png"; // Adjust the path to your logo
+
+const Login = ({ setToken, setRoleId }) => {
+>>>>>>> Stashed changes
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginMessage, setLoginMessage] = useState("");
   const BASE_URL = "http://healthworker.amritacreate.org/LeveledBooks/api/";
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleChangeUsername = (e) => {
     setUsername(e.target.value);
@@ -30,6 +39,7 @@ function Login() {
         body: JSON.stringify({ username, password }),
       });
 
+<<<<<<< Updated upstream
       console.log("Response status:", response.status); // Log the status code
 
       if (response.status == 200) {
@@ -38,6 +48,22 @@ function Login() {
         if (data.success == 1) {
           setLoginMessage("Login Successful");
           navigate("/"); // Navigate to landing page (dashboard) on successful login
+=======
+      if (response.status === 200) {
+        const data = response.data;
+        if (data.success === 1) {
+          setLoginMessage("Login Successful");
+          setToken(data.token);
+          setRoleId(data.role_id);
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('role_id', data.role_id);
+
+          if (data.role_id === "1") {
+            navigate('/admin');
+          } else if (data.role_id === "2") {
+            navigate('/teacher');
+          }
+>>>>>>> Stashed changes
         } else {
           setLoginMessage("Login Failed: Invalid credentials");
         }
@@ -51,19 +77,33 @@ function Login() {
     }
   };
 
+  const title = "Amrita Accelerated Learning Program";
+  const [displayedTitle, setDisplayedTitle] = useState("");
+  const [currentCharIndex, setCurrentCharIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentCharIndex < title.length) {
+      const timeoutId = setTimeout(() => {
+        setDisplayedTitle((prev) => prev + title[currentCharIndex]);
+        setCurrentCharIndex((prev) => prev + 1);
+      }, 70);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [currentCharIndex]);
+
   return (
     <Fragment>
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-6">
-            {/* <div className="card o-hidden border-0 shadow-lg my-5"> */}
-            {/* <div className="card-body p-0"> */}
             <div className="p-5">
               <div className="text-center">
-                <h1 className="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                <img src={logo} alt="Program Logo" style={{ maxWidth: "200px", marginBottom: "20px" }} />
+                <h1 className="h4 mb-4" style={{ color: "navy", textShadow: "2px 2px 5px rgba(0, 0, 0, 0.3)" }}>
+                  {displayedTitle}
+                </h1>
               </div>
               <form className="user" onSubmit={handleSubmit}>
-                {/* Username input */}
                 <div className="form-group">
                   <input
                     type="text"
@@ -73,7 +113,6 @@ function Login() {
                     placeholder="Enter Username"
                   />
                 </div>
-                {/* Password input */}
                 <div className="form-group">
                   <input
                     type="password"
@@ -83,7 +122,6 @@ function Login() {
                     placeholder="Enter Password"
                   />
                 </div>
-                {/* Submit button */}
                 <button
                   type="submit"
                   className="btn btn-primary btn-user btn-block"
@@ -91,7 +129,6 @@ function Login() {
                   Login
                 </button>
               </form>
-              {/* Display login message */}
               <p>{loginMessage}</p>
               <hr />
               <div className="text-center">
@@ -100,8 +137,6 @@ function Login() {
                 </a>
               </div>
             </div>
-            {/* </div> */}
-            {/* </div> */}
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import Nav from "../components/NavBar";
+import Nav from "../components/AdminNavBar";
 import Header from "../components/Header";
 
 function Register() {

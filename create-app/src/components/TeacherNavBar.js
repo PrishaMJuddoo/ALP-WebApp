@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/ALPLogo.png";
 
-function Nav() {
+function TeacherNav() {
   return (
     <div>
       <ul
@@ -34,11 +34,18 @@ function Nav() {
         <hr className="sidebar-divider" />
         {/* Heading */}
         <div className="sidebar-heading">Interface</div>
-        {/* Nav Item - Schools */}
+        {/* Nav Item - Classes */}
         <li className="nav-item">
-          <Link to="/AddSchool" className="nav-link">
+          <Link to="/AddTeacher" className="nav-link">
             <i className="fas fa-fw fa-chart-area" />
-            <span>Schools</span>
+            <span>Teachers</span>
+          </Link>
+        </li>
+        {/* Nav Item -  */}
+        <li className="nav-item">
+          <Link to="/AddClass" className="nav-link">
+            <i className="fas fa-fw fa-user" />
+            <span>Class</span>
           </Link>
         </li>
         {/* Divider */}
@@ -96,4 +103,5 @@ function Nav() {
     </div>
   );
 }
-export default Nav;
+
+export default TeacherNav;
