@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import Nav from "../components/AdminNavBar";
+import Nav from "../components/NavBar";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Logout from "../components/Logout";

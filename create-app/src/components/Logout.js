@@ -26,7 +26,7 @@ function Logout() {
             </button>
           </div>
           <div className="modal-body">
-            Select "Log out" below if you want to logout.
+            Select "Logout" below if you are ready to end your current session.
           </div>
           <div className="modal-footer">
             <button
@@ -36,16 +36,9 @@ function Logout() {
             >
               Cancel
             </button>
-<<<<<<< Updated upstream
             <Link to="/Login" className="btn btn-primary">
               Logout
             </Link>
-=======
-            <button className="btn btn-primary" onClick={handleSignOut}>
-              Log Out
-            </button>
-            {window.localStorage.setItem("redirectPath", location.pathname)}
->>>>>>> Stashed changes
           </div>
         </div>
       </div>
