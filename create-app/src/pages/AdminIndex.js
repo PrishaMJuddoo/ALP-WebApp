@@ -4,7 +4,8 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Logout from "../components/Logout";
 
-function Dashboard() {
+function AdminDashboard() {
+  console.log("Rendering AdminDashboard");
   return (
     <Fragment>
       <>
@@ -484,4 +485,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default AdminDashboard;

@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
-import Nav from "../components/AdminNavBar";
+import AdminNav from "../components/AdminNavBar";
+import TeacherNav from "../components/TeacherNavBar";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Logout from "../components/Logout";
@@ -42,6 +43,8 @@ function AddTeacher() {
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [errors, setErrors] = useState({});
   const teachersPerPage = 10;
+
+  const roleId = window.localStorage.getItem("role_id"); // Get role from localStorage
 
   useEffect(() => {
     fetchTeachers();
@@ -284,7 +287,7 @@ function AddTeacher() {
   return (
     <Fragment>
       <div id="wrapper">
-        <Nav />
+        {roleId === '1' ? <AdminNav /> : <TeacherNav />} {/* Conditional Navbar */}
         <div id="content-wrapper" className="d-flex flex-column">
           <div id="content">
             <Header />

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/ALPLogo.png";
 
-function Nav() {
+function AdminNav() {
   return (
     <div>
       <ul
@@ -11,8 +11,7 @@ function Nav() {
         {/* Sidebar - Brand */}
         <Link
           to="/"
-          className="sidebar-brand d-flex align-items-center
-          justify-content-center"
+          className="sidebar-brand d-flex align-items-center justify-content-center"
         >
           <div className="sidebar-brand-icon rotate-n-0">
             <img src={logo} alt="ALP Logo" style={{ width: "70px", height: "auto" }} />
@@ -22,14 +21,12 @@ function Nav() {
         {/* Divider */}
         <hr className="sidebar-divider my-0" />
         {/* Nav Item - Dashboard */}
-        <Link to="/">
-          <li className="nav-item active">
-            <a className="nav-link">
-              <i className="fas fa-fw fa-tachometer-alt" />
-              <span>Dashboard</span>
-            </a>
-          </li>
-        </Link>
+        <li className="nav-item active">
+          <Link to="/" className="nav-link">
+            <i className="fas fa-fw fa-tachometer-alt" />
+            <span>Dashboard</span>
+          </Link>
+        </li>
         {/* Divider */}
         <hr className="sidebar-divider" />
         {/* Heading */}
@@ -46,6 +43,13 @@ function Nav() {
           <Link to="/AddTeacher" className="nav-link">
             <i className="fas fa-fw fa-user" />
             <span>Teachers</span>
+          </Link>
+        </li>
+        {/* Nav Item - Class Management */}
+        <li className="nav-item">
+          <Link to="/AddClassAdmin" className="nav-link">
+            <i className="fas fa-fw fa-user" />
+            <span>Class Management</span>
           </Link>
         </li>
         {/* Divider */}
@@ -104,4 +108,4 @@ function Nav() {
   );
 }
 
-export default Nav;
+export default AdminNav;

@@ -1,18 +1,9 @@
-<<<<<<< Updated upstream
-import React, { Fragment, useState } from "react";
-import Nav from "../components/NavBar";
-import Header from "../components/Header";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-
-function Login() {
-=======
 import React, { Fragment, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import logo from "../assets/ALPLogo.png"; // Adjust the path to your logo
 
 const Login = ({ setToken, setRoleId }) => {
->>>>>>> Stashed changes
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginMessage, setLoginMessage] = useState("");
@@ -31,24 +22,19 @@ const Login = ({ setToken, setRoleId }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${BASE_URL}/login/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await axios.post(
+        `${BASE_URL}/login/`,
+        {
+          username,
+          password,
         },
-        body: JSON.stringify({ username, password }),
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-<<<<<<< Updated upstream
-      console.log("Response status:", response.status); // Log the status code
-
-      if (response.status == 200) {
-        const data = await response.json();
-        console.log("Response status:", data.message);
-        if (data.success == 1) {
-          setLoginMessage("Login Successful");
-          navigate("/"); // Navigate to landing page (dashboard) on successful login
-=======
       if (response.status === 200) {
         const data = response.data;
         if (data.success === 1) {
@@ -63,12 +49,11 @@ const Login = ({ setToken, setRoleId }) => {
           } else if (data.role_id === "2") {
             navigate('/teacher');
           }
->>>>>>> Stashed changes
         } else {
           setLoginMessage("Login Failed: Invalid credentials");
         }
       } else {
-        const errorMessage = await response.text();
+        const errorMessage = response.data;
         setLoginMessage(`Login Failed: ${errorMessage}`);
       }
     } catch (error) {
@@ -142,6 +127,6 @@ const Login = ({ setToken, setRoleId }) => {
       </div>
     </Fragment>
   );
-}
+};
 
 export default Login;

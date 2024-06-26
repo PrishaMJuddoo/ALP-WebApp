@@ -1,3 +1,4 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/ALPLogo.png";
 
@@ -10,9 +11,8 @@ function TeacherNav() {
       >
         {/* Sidebar - Brand */}
         <Link
-          to="/"
-          className="sidebar-brand d-flex align-items-center
-          justify-content-center"
+          to="/teacher"
+          className="sidebar-brand d-flex align-items-center justify-content-center"
         >
           <div className="sidebar-brand-icon rotate-n-0">
             <img src={logo} alt="ALP Logo" style={{ width: "70px", height: "auto" }} />
@@ -22,28 +22,19 @@ function TeacherNav() {
         {/* Divider */}
         <hr className="sidebar-divider my-0" />
         {/* Nav Item - Dashboard */}
-        <Link to="/">
-          <li className="nav-item active">
-            <a className="nav-link">
-              <i className="fas fa-fw fa-tachometer-alt" />
-              <span>Dashboard</span>
-            </a>
-          </li>
-        </Link>
+        <li className="nav-item active">
+          <Link to="/teacher" className="nav-link">
+            <i className="fas fa-fw fa-tachometer-alt" />
+            <span>Dashboard</span>
+          </Link>
+        </li>
         {/* Divider */}
         <hr className="sidebar-divider" />
         {/* Heading */}
         <div className="sidebar-heading">Interface</div>
         {/* Nav Item - Classes */}
         <li className="nav-item">
-          <Link to="/AddTeacher" className="nav-link">
-            <i className="fas fa-fw fa-chart-area" />
-            <span>Teachers</span>
-          </Link>
-        </li>
-        {/* Nav Item -  */}
-        <li className="nav-item">
-          <Link to="/AddClass" className="nav-link">
+          <Link to="/teacher/classes" className="nav-link">
             <i className="fas fa-fw fa-user" />
             <span>Class</span>
           </Link>
@@ -54,9 +45,9 @@ function TeacherNav() {
         <div className="sidebar-heading">Addons</div>
         {/* Nav Item - Pages Collapse Menu */}
         <li className="nav-item">
-          <a
+          <Link
             className="nav-link collapsed"
-            href="#"
+            to="#"
             data-toggle="collapse"
             data-target="#collapsePages"
             aria-expanded="true"
@@ -64,7 +55,7 @@ function TeacherNav() {
           >
             <i className="fas fa-fw fa-folder" />
             <span>Pages</span>
-          </a>
+          </Link>
           <div
             id="collapsePages"
             className="collapse"

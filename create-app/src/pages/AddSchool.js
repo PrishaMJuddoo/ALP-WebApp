@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Nav from "../components/AdminNavBar";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -13,15 +14,15 @@ import Paper from "@mui/material/Paper";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
-import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
 import Pagination from "@mui/material/Pagination";
 
 const BASE_URL = "http://healthworker.amritacreate.org/LeveledBooks/api/";
@@ -536,7 +537,9 @@ function AddSchool() {
                       {Array.isArray(currentSchools) &&
                         currentSchools.map((school) => (
                           <TableRow key={school.id}>
-                            <TableCell>{school.school_name}</TableCell>
+                            <TableCell>
+                              <Link to={`/schools/${school.id}`}>{school.school_name}</Link>
+                            </TableCell>
                             <TableCell>{school.principal_name}</TableCell>
                             <TableCell>{school.phone}</TableCell>
                             <TableCell>{school.email_official}</TableCell>

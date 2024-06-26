@@ -1,6 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Logout() {
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    // Perform logout logic here, e.g., clearing tokens, user data, etc.
+    window.localStorage.setItem("redirectPath", window.location.pathname);
+    // Redirect to the login page or another page after logout
+    navigate("/login");
+  };
+
   return (
     <div
       className="modal fade"
@@ -36,20 +45,14 @@ function Logout() {
             >
               Cancel
             </button>
-<<<<<<< Updated upstream
-            <Link to="/Login" className="btn btn-primary">
-              Logout
-            </Link>
-=======
             <button className="btn btn-primary" onClick={handleSignOut}>
               Log Out
             </button>
-            {window.localStorage.setItem("redirectPath", location.pathname)}
->>>>>>> Stashed changes
           </div>
         </div>
       </div>
     </div>
   );
 }
+
 export default Logout;
